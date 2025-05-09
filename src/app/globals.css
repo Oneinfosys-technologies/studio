@@ -89,6 +89,8 @@ body {
   body {
     @apply bg-background text-foreground;
     scroll-behavior: smooth;
+    position: relative; /* For pseudo-element positioning */
+    overflow-x: hidden; /* Prevent horizontal scroll from effects */
   }
 }
 
@@ -97,25 +99,69 @@ body {
   @apply bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--secondary))] bg-clip-text text-transparent;
 }
 
-/* Hero Section Animations */
-@keyframes particles {
-  0% { transform: translate(0,0); }
-  25% { transform: translate(5px,5px); }
-  50% { transform: translate(0,10px); }
-  75% { transform: translate(-5px,5px); }
-  100% { transform: translate(0,0); }
+/* Global Background Effect */
+.site-background-effect {
+  position: fixed;
+  inset: 0;
+  z-index: -10; /* Deep background */
+  overflow: hidden; /* Prevent its children from overflowing */
+  background-color: hsl(var(--background)); /* Ensure base background color is set */
 }
 
-.hero-particles-animation {
-  animation: particles 20s infinite linear;
+.site-background-effect::before,
+.site-background-effect::after {
+  content: '';
+  position: absolute;
+  width: 200%; /* Large to allow movement */
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background-repeat: repeat;
+  will-change: transform; /* Performance hint for animation */
 }
 
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0px); }
+.site-background-effect::before {
+  background-image: 
+    radial-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px), /* Adjusted opacity */
+    radial-gradient(hsl(var(--accent) / 0.04) 1px, transparent 1px); /* Adjusted opacity */
+  background-size: 60px 60px, 80px 80px; /* Slightly different sizes */
+  animation: moveParticles 80s linear infinite;
+  opacity: 0.5; /* Base opacity for this layer */
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.dark .site-background-effect::before {
+  background-image: 
+    radial-gradient(hsl(var(--primary) / 0.1) 1px, transparent 1px),
+    radial-gradient(hsl(var(--accent) / 0.06) 1px, transparent 1px);
+  opacity: 0.7;
+}
+
+.site-background-effect::after {
+   background-image: 
+     radial-gradient(hsl(var(--secondary) / 0.06) 1px, transparent 1px), /* Adjusted opacity */
+     radial-gradient(hsl(var(--foreground) / 0.02) 1px, transparent 1px); /* Adjusted opacity */
+   background-size: 120px 120px, 40px 40px; /* Slightly different sizes */
+   animation: moveParticlesSlow 150s linear infinite alternate;
+   opacity: 0.4; /* Base opacity for this layer */
+}
+
+.dark .site-background-effect::after {
+  background-image: 
+    radial-gradient(hsl(var(--secondary) / 0.08) 1px, transparent 1px),
+    radial-gradient(hsl(var(--foreground) / 0.04) 1px, transparent 1px);
+  opacity: 0.6;
+}
+
+
+@keyframes moveParticles {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-30px, 15px) rotate(5deg); }
+  50% { transform: translate(0px, -30px) rotate(-5deg); }
+  75% { transform: translate(30px, 15px) rotate(10deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes moveParticlesSlow {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(20px, 20px) rotate(-8deg); }
 }

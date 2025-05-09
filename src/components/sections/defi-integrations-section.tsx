@@ -1,40 +1,41 @@
-import Image from 'next/image';
+
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
+import { Zap } from 'lucide-react'; // Using Zap as a generic "integration" icon
 
 interface Protocol {
   name: string;
-  logoUrl: string;
+  logoUrl: string; // Kept for structure, but not used for an Image component
   description: string;
   websiteUrl: string;
-  aiHint: string;
+  aiHint: string; // Kept for structure
 }
 
 const protocols: Protocol[] = [
   {
     name: 'Aave',
-    logoUrl: 'https://picsum.photos/seed/aave/64/64',
+    logoUrl: '', // No longer used for direct image rendering
     description: 'A leading decentralized lending and borrowing protocol.',
     websiteUrl: '#',
     aiHint: 'protocol logo finance',
   },
   {
     name: 'Curve Finance',
-    logoUrl: 'https://picsum.photos/seed/curve/64/64',
+    logoUrl: '',
     description: 'Optimized for stablecoin trading with low slippage.',
     websiteUrl: '#',
     aiHint: 'protocol logo exchange',
   },
   {
     name: 'Uniswap',
-    logoUrl: 'https://picsum.photos/seed/uniswap/64/64',
+    logoUrl: '',
     description: 'A popular decentralized exchange (DEX) for swapping tokens.',
     websiteUrl: '#',
     aiHint: 'protocol logo unicorn',
   },
   {
     name: 'Compound',
-    logoUrl: 'https://picsum.photos/seed/compound/64/64',
+    logoUrl: '',
     description: 'An algorithmic, autonomous interest rate protocol.',
     websiteUrl: '#',
     aiHint: 'protocol logo letter C',
@@ -58,15 +59,15 @@ export default function DeFiIntegrationsSection() {
             <Link href={protocol.websiteUrl} key={protocol.name} target="_blank" rel="noopener noreferrer" passHref>
               <Card className="group bg-card/80 dark:bg-card/50 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 h-full flex flex-col">
                 <CardContent className="p-6 flex flex-col items-center text-center flex-grow">
-                  <div className="relative w-16 h-16 mb-4 group-hover:animate-pulse">
-                    <Image
-                      src={protocol.logoUrl}
-                      alt={`${protocol.name} Logo`}
-                      layout="fill"
-                      objectFit="contain"
-                      className="rounded-full"
-                      data-ai-hint={protocol.aiHint}
-                    />
+                  <div className="w-16 h-16 mb-4 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                    {/* Simple initial or generic icon */}
+                    {protocol.name.length > 0 ? (
+                       <span className="text-primary text-2xl font-semibold group-hover:text-primary-foreground transition-colors duration-300">
+                         {protocol.name.substring(0,1).toUpperCase()}
+                       </span>
+                    ) : (
+                       <Zap className="w-8 h-8 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+                    )}
                   </div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">{protocol.name}</h3>
                   <p className="text-sm text-muted-foreground flex-grow">{protocol.description}</p>

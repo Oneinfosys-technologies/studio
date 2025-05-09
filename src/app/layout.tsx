@@ -29,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
+        <div className="site-background-effect" aria-hidden="true"></div>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

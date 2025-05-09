@@ -1,7 +1,6 @@
 'use client';
-import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { BarChart, TrendingUp, CircleDollarSign, Server } from 'lucide-react';
+import { BarChart as LucideBarChart, TrendingUp, CircleDollarSign, Server, Activity } from 'lucide-react'; // Renamed BarChart to avoid conflict
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from '@/components/ui/chart';
 import { Bar, ResponsiveContainer, RadialBarChart, RadialBar, PolarAngleAxis } from 'recharts';
 import { useState, useEffect } from 'react';
@@ -147,16 +146,29 @@ export default function DashboardPreviewSection() {
           </Card>
         </div>
         
-        <div className="mt-12 text-center">
-            <Image
-                src="https://picsum.photos/seed/dashboard3d/800/450"
-                alt="3D Dashboard Mockup"
-                width={800}
-                height={450}
-                className="rounded-lg shadow-2xl mx-auto"
-                data-ai-hint="3d dashboard futuristic"
-            />
-            <p className="text-sm text-muted-foreground mt-4">Conceptual 3D dashboard interface.</p>
+        <div className="mt-12 text-center p-8 bg-card/60 dark:bg-card/40 backdrop-blur-sm rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300">
+          <h3 className="text-xl font-semibold text-foreground mb-2">Conceptual Dashboard Visualization</h3>
+          <p className="text-muted-foreground mb-4">
+            Data insights through dynamic effects and interactive elements.
+          </p>
+          <div className="mt-4 h-40 flex items-center justify-center bg-muted/30 rounded-md p-4">
+            {/* Example of an "effect" - could be animated bars, particles, etc. */}
+            <div className="flex space-x-2">
+              {[...Array(5)].map((_, i) => (
+                <div
+                  key={i}
+                  className="w-4 bg-primary/70 animate-pulse rounded-sm"
+                  style={{ 
+                    height: `${Math.random() * 80 + 20}px`, 
+                    animationDelay: `${i * 0.1}s`,
+                    animationDuration: '1.5s'
+                  }}
+                />
+              ))}
+            </div>
+             <Activity className="w-16 h-16 text-accent opacity-50 ml-8" />
+          </div>
+           <p className="text-sm text-muted-foreground mt-4">Conceptual dashboard interface reimagined with dynamic visual effects.</p>
         </div>
 
       </div>

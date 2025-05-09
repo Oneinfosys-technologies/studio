@@ -1,28 +1,14 @@
-import Image from 'next/image';
+
+"use client"; // Add this directive
+
 import { Button } from '@/components/ui/button';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, DollarSign } from 'lucide-react';
 
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center py-20 overflow-hidden">
-      {/* Animated Background Overlay */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 opacity-70 dark:opacity-50" />
-        <div 
-          className="absolute inset-0 bg-cover bg-no-repeat opacity-20 dark:opacity-10"
-          style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23177E89' fill-opacity='0.4'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c-5.523 0-10-4.477-10-10zm0 0c0-5.523-4.477-10-10-10S30 44.477 30 50s4.477 10 10 10c5.523 0 10-4.477 10-10zm0 0c0 5.523 4.477 10 10 10s10-4.477 10-10-4.477-10-10-10c-5.523 0-10 4.477-10 10zm0 0c0 5.523-4.477 10-10-10s-10-4.477-10-10 4.477-10 10-10c5.523 0 10 4.477 10 10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" 
-        }}
-        />
-        {/* Subtle particle like effect using radial gradients */}
-        <div className="absolute inset-0 hero-particles-animation" style={{
-          backgroundImage: `
-            radial-gradient(circle at 20% 20%, hsl(var(--accent) / 0.1) 0%, transparent 20%),
-            radial-gradient(circle at 80% 30%, hsl(var(--primary) / 0.1) 0%, transparent 20%),
-            radial-gradient(circle at 30% 80%, hsl(var(--secondary) / 0.1) 0%, transparent 20%),
-            radial-gradient(circle at 70% 70%, hsl(var(--accent) / 0.05) 0%, transparent 15%)
-          `,
-        }}></div>
-      </div>
+      {/* Removed local background overlay divs to let global effect show */}
+      {/* The global .site-background-effect will provide the background */}
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight">
@@ -41,17 +27,31 @@ export default function HeroSection() {
             Explore Protocol
           </Button>
         </div>
-        <div className="mt-16 lg:mt-24 relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 mx-auto animate-float">
-          <Image
-            src="https://picsum.photos/320/320"
-            alt="3D USDA Coin Model"
-            layout="fill"
-            objectFit="contain"
-            className="rounded-full shadow-2xl"
-            data-ai-hint="3d coin crypto"
-          />
+        
+        {/* Placeholder for where the 3D coin model was, now an animated effect */}
+        <div className="mt-16 lg:mt-24 h-48 sm:h-64 md:h-80 flex items-center justify-center">
+          <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48">
+            <div className="absolute inset-0 bg-primary/20 rounded-full animate-pulse opacity-50"></div>
+            <div className="absolute inset-2 bg-primary/30 rounded-full animate-pulse animation-delay-200 opacity-60"></div>
+            <div className="absolute inset-4 bg-primary/40 rounded-full animate-pulse animation-delay-400 opacity-70"></div>
+            <div className="w-full h-full rounded-full border-4 border-primary/50 flex items-center justify-center animate-spin-slow">
+              <DollarSign className="text-primary opacity-80 h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24" />
+            </div>
+          </div>
         </div>
+        <style jsx global>{`
+          .animation-delay-200 { animation-delay: 0.2s; }
+          .animation-delay-400 { animation-delay: 0.4s; }
+          @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          .animate-spin-slow {
+            animation: spin-slow 20s linear infinite;
+          }
+        `}</style>
       </div>
     </section>
   );
 }
+

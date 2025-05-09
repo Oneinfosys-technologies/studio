@@ -1,7 +1,7 @@
-import Image from 'next/image';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Vote, PieChart, Users } from 'lucide-react';
+import { Vote, PieChart, Users, BarChartHorizontalBig } from 'lucide-react';
 
 export default function GovernanceSection() {
   return (
@@ -51,40 +51,28 @@ export default function GovernanceSection() {
                 <PieChart className="w-6 h-6 mr-2 text-primary" />
                 Interactive Tokenomics
               </h3>
-              <div className="relative aspect-video w-full bg-muted rounded-lg shadow-lg overflow-hidden">
-                <Image
-                  src="https://picsum.photos/seed/tokenomics/600/338"
-                  alt="Interactive Tokenomics Graph"
-                  layout="fill"
-                  objectFit="cover"
-                  data-ai-hint="tokenomics graph futuristic"
-                  className="transition-transform duration-500 hover:scale-105"
-                />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent flex items-end p-4">
-                    <p className="text-white text-sm">Hover or click for details (conceptual)</p>
+              <div className="aspect-[16/10] w-full bg-muted/40 dark:bg-muted/20 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden flex items-center justify-center p-6 transition-all duration-300 hover:shadow-primary/20 hover:shadow-2xl group">
+                <div className="text-center">
+                  <PieChart className="w-20 h-20 text-primary mx-auto mb-3 opacity-60 group-hover:opacity-90 transition-opacity duration-300 transform group-hover:scale-110" />
+                  <p className="text-lg font-medium text-foreground">Tokenomics Visualized</p>
+                  <p className="text-sm text-muted-foreground">Dynamic representation of token distribution and utility.</p>
                 </div>
               </div>
               <p className="text-xs text-muted-foreground mt-2 text-center">Conceptual visualization of SKY token distribution and utility.</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-3 flex items-center">
-                <Vote className="w-6 h-6 mr-2 text-primary" />
-                Voting System Mockup
+                <BarChartHorizontalBig className="w-6 h-6 mr-2 text-primary" /> {/* Changed icon for variety */}
+                Voting System Interface
               </h3>
-              <div className="relative aspect-video w-full bg-muted rounded-lg shadow-lg overflow-hidden">
-                <Image
-                  src="https://picsum.photos/seed/voting/600/338"
-                  alt="Voting System Animation Mockup"
-                  layout="fill"
-                  objectFit="cover"
-                  data-ai-hint="3d voting pool"
-                  className="transition-transform duration-500 hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent flex items-end p-4">
-                    <p className="text-white text-sm">Animated representation of the voting process (conceptual)</p>
+               <div className="aspect-[16/10] w-full bg-muted/40 dark:bg-muted/20 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden flex items-center justify-center p-6 transition-all duration-300 hover:shadow-accent/20 hover:shadow-2xl group">
+                <div className="text-center">
+                  <Vote className="w-20 h-20 text-accent mx-auto mb-3 opacity-60 group-hover:opacity-90 transition-opacity duration-300 transform group-hover:rotate-[-5deg] group-hover:scale-110" />
+                  <p className="text-lg font-medium text-foreground">DAO Voting Portal</p>
+                  <p className="text-sm text-muted-foreground">Interactive proposal and voting simulation area.</p>
                 </div>
               </div>
-               <p className="text-xs text-muted-foreground mt-2 text-center">Illustrative mockup of the DAO voting interface.</p>
+               <p className="text-xs text-muted-foreground mt-2 text-center">Illustrative mockup of the DAO voting interface as a dynamic effect.</p>
             </div>
           </div>
         </div>
