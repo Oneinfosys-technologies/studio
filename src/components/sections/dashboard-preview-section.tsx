@@ -1,8 +1,8 @@
 'use client';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { BarChart as LucideBarChart, TrendingUp, CircleDollarSign, Server, Activity } from 'lucide-react'; // Renamed BarChart to avoid conflict
+import { TrendingUp, CircleDollarSign, Server, Activity } from 'lucide-react'; 
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from '@/components/ui/chart';
-import { Bar, ResponsiveContainer, RadialBarChart, RadialBar, PolarAngleAxis } from 'recharts';
+import { Bar, BarChart, ResponsiveContainer, RadialBarChart, RadialBar, PolarAngleAxis } from 'recharts'; // Added BarChart here
 import { useState, useEffect } from 'react';
 
 
