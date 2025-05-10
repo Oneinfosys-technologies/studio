@@ -114,9 +114,9 @@ export default function DeFiIntegrationsSection() {
                       <Card className="group h-full flex flex-col text-center hover:shadow-xl hover:shadow-secondary/20 transition-all duration-300 transform hover:-translate-y-1">
                         <CardHeader className="items-center pt-8">
                           <div className="p-4 mb-4 rounded-full bg-secondary/10 ring-2 ring-secondary/30 neon-border-secondary opacity-70 group-hover:opacity-100 transition-opacity duration-300">
-                            <protocol.icon className="w-10 h-10 text-secondary text-glow-secondary" />
+                            <protocol.icon className="w-10 h-10 text-secondary" />
                           </div>
-                          <CardTitle className="text-glow-secondary">{protocol.name}</CardTitle>
+                          <CardTitle className="text-secondary">{protocol.name}</CardTitle>
                         </CardHeader>
                         <CardContent className="flex-grow pb-8">
                           <p className="text-sm text-muted-foreground">{protocol.description}</p>

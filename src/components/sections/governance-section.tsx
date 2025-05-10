@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Vote, Users, Archive, BarChartHorizontalBig, FileText, CheckCircle, XCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Progress } from '@/components/ui/progress'; // Assuming Progress component exists
+import { Progress } from '@/components/ui/progress'; 
 
 const sectionVariants = {
   hidden: { opacity: 0 },
@@ -53,7 +53,7 @@ export default function GovernanceSection() {
           <motion.div className="lg:col-span-1 space-y-6" variants={itemVariants}>
             <Card>
               <CardHeader className="flex flex-row items-center space-x-3">
-                <Users className="w-8 h-8 text-primary text-glow-primary" />
+                <Users className="w-8 h-8 text-primary" />
                 <CardTitle>Decentralized Autonomous Organization</CardTitle>
               </CardHeader>
               <CardContent>
@@ -64,14 +64,14 @@ export default function GovernanceSection() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center space-x-3">
-                <Vote className="w-8 h-8 text-secondary text-glow-secondary" />
+                <Vote className="w-8 h-8 text-secondary" />
                 <CardTitle>Voting Power & Proposals</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
                   SKY tokens grant voting rights. Influence protocol parameters, treasury allocations, and new feature integrations.
                 </p>
-                <Button variant="neon" className="mt-4 w-full border-secondary text-secondary shadow-[0_0_10px_theme(colors.secondary.DEFAULT),0_0_20px_theme(colors.secondary.DEFAULT)_inset] hover:shadow-[0_0_15px_theme(colors.secondary.DEFAULT),0_0_30px_theme(colors.secondary.DEFAULT)_inset] hover:text-glow-secondary">
+                <Button variant="neon" className="mt-4 w-full border-secondary text-secondary shadow-[0_0_10px_theme(colors.secondary.DEFAULT),0_0_20px_theme(colors.secondary.DEFAULT)_inset] hover:shadow-[0_0_15px_theme(colors.secondary.DEFAULT),0_0_30px_theme(colors.secondary.DEFAULT)_inset] hover:text-secondary">
                   View Governance Forum
                 </Button>
               </CardContent>
@@ -80,7 +80,7 @@ export default function GovernanceSection() {
 
           <motion.div className="lg:col-span-2 space-y-8" variants={itemVariants}>
             <div className="flex items-center space-x-3 mb-6">
-               <BarChartHorizontalBig className="w-8 h-8 text-primary text-glow-primary" />
+               <BarChartHorizontalBig className="w-8 h-8 text-primary" />
                <h3 className="text-2xl font-semibold text-foreground">Live Governance Proposals</h3>
             </div>
             
@@ -88,13 +88,13 @@ export default function GovernanceSection() {
               {mockProposals.map((proposal) => {
                 const totalVotes = proposal.votesFor + proposal.votesAgainst;
                 const forPercentage = totalVotes > 0 ? (proposal.votesFor / totalVotes) * 100 : 0;
-                const againstPercentage = totalVotes > 0 ? (proposal.votesAgainst / totalVotes) * 100 : 0;
+                // const againstPercentage = totalVotes > 0 ? (proposal.votesAgainst / totalVotes) * 100 : 0; // Not used in Progress bar
 
                 return (
                   <Card key={proposal.id} className="hover:shadow-lg hover:shadow-primary/10 transition-shadow duration-300">
                     <CardHeader>
                       <div className="flex justify-between items-start">
-                        <CardTitle className="text-lg text-glow-primary pr-4">{proposal.title}</CardTitle>
+                        <CardTitle className="text-lg text-primary pr-4">{proposal.title}</CardTitle>
                         <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
                           proposal.status === 'Voting Active' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/50' :
                           proposal.status === 'Passed' ? 'bg-green-500/20 text-green-400 border border-green-500/50' :
@@ -110,10 +110,10 @@ export default function GovernanceSection() {
                         <div className="mb-4">
                           <div className="flex justify-between text-sm text-muted-foreground mb-1">
                             <span>For: {proposal.votesFor} ({forPercentage.toFixed(1)}%)</span>
-                            <span>Against: {proposal.votesAgainst} ({againstPercentage.toFixed(1)}%)</span>
+                            <span>Against: {proposal.votesAgainst} ({ (totalVotes > 0 ? (proposal.votesAgainst / totalVotes) * 100 : 0).toFixed(1)}%)</span>
                           </div>
                           <div className="flex space-x-1">
-                            <Progress value={forPercentage} className="h-3 bg-green-500/70 flex-grow" indicatorClassName="bg-green-400" />
+                            <Progress value={forPercentage} className="h-3" indicatorClassName="bg-green-400" />
                           </div>
                         </div>
                       )}
@@ -139,7 +139,7 @@ export default function GovernanceSection() {
               })}
             </div>
             <div className="text-center mt-8">
-               <Button variant="link" className="text-lg text-primary hover:text-glow-primary">
+               <Button variant="link" className="text-lg text-primary hover:text-primary">
                  Explore All Proposals <Archive className="ml-2 h-5 w-5" />
                </Button>
             </div>
@@ -149,19 +149,3 @@ export default function GovernanceSection() {
     </motion.section>
   );
 }
-
-// Add this to ui/progress.tsx if you don't have indicatorClassName prop
-// const ProgressPrimitiveIndicator = React.forwardRef<..., { indicatorClassName?: string }>(
-//   ({ className, indicatorClassName, ...props }, ref) => (
-//     <ProgressPrimitive.Indicator
-//       ref={ref}
-//       className={cn("h-full w-full flex-1 bg-primary transition-all", indicatorClassName, className)}
-//       style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
-//       {...props}
-//     />
-//   )
-// );
-// ProgressPrimitiveIndicator.displayName = ProgressPrimitive.Indicator.displayName;
-// replace ProgressPrimitive.Indicator with ProgressPrimitiveIndicator usage
-// For now, I'll assume the Progress component is flexible enough or a simple one will do.
-// The default Progress from shadcn doesn't have specific indicatorClassName, so coloring the bar itself.

@@ -8,7 +8,44 @@ body {
 
 @layer base {
   :root {
-    /* Deep Midnight Blue, Emerald Green, Electric Violet, Crisp White */
+    --background: 210 40% 98%; /* Light theme background */
+    --foreground: 210 40% 9.8%; /* Light theme foreground */
+
+    --card: 210 40% 98%;
+    --card-foreground: 210 40% 9.8%;
+
+    --popover: 210 40% 98%;
+    --popover-foreground: 210 40% 9.8%;
+
+    --primary: 142.1 70.6% 45.3%; /* ShadCN Green */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217.2 91.2% 59.8%; /* ShadCN Blue */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 210 40% 46.1%;
+
+    --accent: 210 40% 96.1%; /* Adjusted from electric blue for light theme */
+    --accent-foreground: 142.1 70.6% 45.3%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 210 40% 89.8%;
+    --input: 210 40% 89.8%;
+    --ring: 142.1 70.6% 45.3%;
+
+    --chart-1: 142.1 70.6% 45.3%; /* Green */
+    --chart-2: 217.2 91.2% 59.8%; /* Blue */
+    --chart-3: 262.1 83.3% 57.8%; /* Violet */
+    --chart-4: 10 80% 50%;   /* Example Red */
+    --chart-5: 40 80% 50%;   /* Example Orange */
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
     --background: 225 50% 7%; /* Deep Midnight Blue */
     --foreground: 0 0% 98%; /* Crisp White */
 
@@ -19,7 +56,7 @@ body {
     --popover-foreground: 0 0% 98%;
 
     --primary: 150 60% 45%; /* Emerald Green */
-    --primary-foreground: 225 50% 95%; 
+    --primary-foreground: 225 50% 95%;
 
     --secondary: 270 70% 55%; /* Electric Violet */
     --secondary-foreground: 0 0% 98%;
@@ -28,7 +65,7 @@ body {
     --muted-foreground: 225 25% 70%;
 
     --accent: 180 100% 50%; /* Cyan/Electric Blue for some accents if needed */
-    --accent-foreground: 225 50% 10%; 
+    --accent-foreground: 225 50% 10%;
 
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 98%;
@@ -40,47 +77,10 @@ body {
     --chart-1: 150 60% 45%; /* Emerald Green */
     --chart-2: 270 70% 55%; /* Electric Violet */
     --chart-3: 180 100% 50%; /* Cyan */
-    --chart-4: 210 70% 60%; 
+    --chart-4: 210 70% 60%;
     --chart-5: 300 70% 60%;
 
     --radius: 0.75rem; /* Slightly larger radius for modern feel */
-  }
-
-  /* Light theme (optional, but good to have placeholders) */
-  .light {
-    --background: 220 30% 98%;
-    --foreground: 225 50% 15%;
-
-    --card: 220 25% 100%;
-    --card-foreground: 225 50% 15%;
-
-    --popover: 220 25% 100%;
-    --popover-foreground: 225 50% 15%;
-
-    --primary: 150 60% 40%; 
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 270 70% 50%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 220 25% 94%;
-    --muted-foreground: 220 20% 45%;
-
-    --accent: 180 90% 45%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 80% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 220 25% 88%;
-    --input: 220 25% 92%;
-    --ring: 270 70% 55%;
-
-    --chart-1: 150 60% 40%;
-    --chart-2: 270 70% 50%;
-    --chart-3: 180 90% 45%;
-    --chart-4: 210 70% 55%;
-    --chart-5: 300 70% 55%;
   }
 }
 
@@ -105,19 +105,6 @@ body {
   box-shadow: 0 8px 32px 0 hsl(var(--primary) / 0.15);
 }
 
-/* Neon Glow Text */
-.text-glow-primary {
-  text-shadow: 
-    0 0 5px hsl(var(--primary) / 0.8),
-    0 0 10px hsl(var(--primary) / 0.6),
-    0 0 15px hsl(var(--primary) / 0.4);
-}
-.text-glow-secondary {
-  text-shadow:
-    0 0 5px hsl(var(--secondary) / 0.8),
-    0 0 10px hsl(var(--secondary) / 0.6),
-    0 0 15px hsl(var(--secondary) / 0.4);
-}
 
 /* Custom gradient text (can be adapted) */
 .text-gradient-futuristic {

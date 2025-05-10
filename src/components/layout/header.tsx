@@ -49,7 +49,7 @@ export default function Header() {
             <Link
               key={item.label}
               href={item.href}
-              className="text-sm font-medium text-foreground/80 hover:text-glow-primary hover:text-foreground transition-all duration-300"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-300"
               onClick={(e) => {
                 e.preventDefault();
                 document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });
@@ -89,7 +89,7 @@ export default function Header() {
                     <SheetClose asChild key={item.label}>
                       <Link
                         href={item.href}
-                        className="text-lg font-medium text-foreground/90 hover:text-glow-primary hover:text-primary rounded-md px-3 py-2 transition-all duration-300"
+                        className="text-lg font-medium text-foreground/90 hover:text-primary rounded-md px-3 py-2 transition-all duration-300"
                         onClick={(e) => {
                            e.preventDefault();
                            document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });

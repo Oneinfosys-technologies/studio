@@ -93,7 +93,7 @@ export default function AboutUSDASection() {
               <Card className="h-full hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 transform hover:-translate-y-1">
                 <CardHeader className="items-center text-center">
                   <div className="p-4 bg-primary/10 rounded-full inline-block mb-4 ring-2 ring-primary/30 neon-border-primary opacity-50 group-hover:opacity-100 transition-opacity duration-300">
-                    <item.icon className="h-10 w-10 text-primary text-glow-primary" />
+                    <item.icon className="h-10 w-10 text-primary" />
                   </div>
                   <CardTitle>{item.title}</CardTitle>
                 </CardHeader>
