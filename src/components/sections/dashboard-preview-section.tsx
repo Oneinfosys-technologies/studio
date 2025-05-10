@@ -2,10 +2,13 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { TrendingUp, Zap, Server, Activity, ArrowDownCircle, ArrowUpCircle } from 'lucide-react'; 
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { TrendingUp, Activity, Server } from 'lucide-react'; 
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart as RechartsBarChart, Bar } from 'recharts'; // Renamed BarChart to avoid conflict
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, animate } from 'framer-motion'; // Import animate
+import type { ChartConfig } from "@/components/ui/chart"; // Import ChartConfig
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"; // Import ChartContainer and ChartTooltipContent
+
 
 interface StatCardProps {
   title: string;
@@ -21,13 +24,14 @@ const AnimatedCounter: React.FC<{ value: number; precision?: number; isCurrency?
   const [currentValue, setCurrentValue] = useState(0);
 
   useEffect(() => {
-    const animation = motion.animate(currentValue, value, {
+    // Use the imported 'animate' function directly
+    const animation = animate(currentValue, value, {
       duration: 1.5,
       ease: "easeOut",
       onUpdate: (latest) => setCurrentValue(latest),
     });
-    return animation.stop;
-  }, [value]);
+    return () => animation.stop(); // Ensure stop is called on the returned controls
+  }, [value, currentValue]); // Added currentValue to dependencies
 
   return (
     <span className="text-3xl font-bold text-foreground">
@@ -41,6 +45,11 @@ const AnimatedCounter: React.FC<{ value: number; precision?: number; isCurrency?
 
 const StatCard: React.FC<StatCardProps> = ({ title, value, previousValue, unit, icon: Icon, precision = 0, isCurrency = false }) => {
   const percentageChange = previousValue && previousValue !== 0 ? ((value - previousValue) / previousValue) * 100 : null;
+  const [displayTime, setDisplayTime] = useState('');
+
+  useEffect(() => {
+    setDisplayTime(new Date().toLocaleTimeString());
+  }, []); // Will run once on mount client-side
   
   return (
     <Card className="h-full">
@@ -57,7 +66,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, previousValue, unit, 
           </p>
         )}
          <p className="text-xs text-muted-foreground mt-1">
-           {title === 'Current Peg' ? 'Target: 1.00 USD' : `Updated: ${new Date().toLocaleTimeString()}`}
+           {title === 'Current Peg' ? 'Target: 1.00 USD' : `Updated: ${displayTime || 'Loading...'}`}
          </p>
       </CardContent>
     </Card>
@@ -72,10 +81,37 @@ const initialStatsData = [
 ];
 
 const supplyHistoryData = [
-  { name: 'Jan', supply: 100, minted: 20, burned: 5 }, { name: 'Feb', supply: 115, minted: 30, burned: 10 }, 
-  { name: 'Mar', supply: 135, minted: 25, burned: 5 }, { name: 'Apr', supply: 150, minted: 35, burned: 15 },
-  { name: 'May', supply: 170, minted: 40, burned: 20 }, { name: 'Jun', supply: 190, minted: 30, burned: 10 }
+  { name: 'Jan', supply: 10000000, minted: 2000000, burned: 500000 }, 
+  { name: 'Feb', supply: 11500000, minted: 3000000, burned: 1000000 }, 
+  { name: 'Mar', supply: 13500000, minted: 2500000, burned: 500000 }, 
+  { name: 'Apr', supply: 15000000, minted: 3500000, burned: 1500000 },
+  { name: 'May', supply: 17000000, minted: 4000000, burned: 2000000 }, 
+  { name: 'Jun', supply: 19000000, minted: 3000000, burned: 1000000 }
 ];
+
+const supplyChartData = supplyHistoryData.map(d => ({ month: d.name, desktop: d.supply, mobile: d.minted - d.burned }));
+
+const chartConfig = {
+  desktop: {
+    label: "Total Supply",
+    color: "hsl(var(--primary))",
+  },
+  mobile: { // Example for net change, can be adapted
+    label: "Net Change",
+    color: "hsl(var(--secondary))",
+  },
+} satisfies ChartConfig;
+
+const mintBurnChartConfig = {
+  minted: {
+    label: "Minted",
+    color: "hsl(var(--primary))",
+  },
+  burned: {
+    label: "Burned",
+    color: "hsl(var(--destructive))",
+  },
+} satisfies ChartConfig;
 
 
 const sectionVariants = {
@@ -108,19 +144,27 @@ export default function LiveDashboardSection() {
   }, []);
 
   if (!isClient) {
-     // Basic skeleton or loading state for SSR
     return (
-      <section id="dashboard" className="py-16 lg:py-24">
+      <motion.section 
+        id="dashboard" 
+        className="py-16 lg:py-24"
+        initial="hidden"
+        animate="visible" // Use animate here for initial load
+        variants={sectionVariants}
+        viewport={{ once: true, amount: 0.1 }}
+      >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 lg:mb-16">
+          <motion.div 
+            className="text-center mb-12 lg:mb-16"
+            variants={itemVariants} // Apply variants here too for consistency
+          >
             <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
               Live <span className="text-gradient-futuristic">USDA Dashboard</span>
             </h2>
              <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">Loading real-time data...</p>
-          </div>
-          {/* Skeleton cards */}
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
     );
   }
 
@@ -160,23 +204,18 @@ export default function LiveDashboardSection() {
               <CardDescription>Monthly growth of total USDA supply.</CardDescription>
             </CardHeader>
             <CardContent className="h-[300px] sm:h-[350px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={supplyHistoryData} margin={{ top: 5, right: 20, bottom: 5, left: -10 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border) / 0.5)" />
-                  <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize="0.75rem" />
-                  <YAxis stroke="hsl(var(--muted-foreground))" fontSize="0.75rem" tickFormatter={(value) => `${value/1000000}M`} />
-                  <Tooltip 
-                    contentStyle={{ 
-                      background: 'hsl(var(--card) / 0.8)', 
-                      borderColor: 'hsl(var(--border))',
-                      borderRadius: 'var(--radius)',
-                    }}
-                    itemStyle={{ color: 'hsl(var(--card-foreground))' }}
-                  />
-                  <Legend wrapperStyle={{fontSize: "0.875rem"}} />
-                  <Line type="monotone" dataKey="supply" stroke="hsl(var(--primary))" strokeWidth={2} dot={{ r: 4, fill: 'hsl(var(--primary))' }} activeDot={{ r: 6 }} name="Total Supply" />
-                </LineChart>
-              </ResponsiveContainer>
+             <ChartContainer config={chartConfig} className="w-full h-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={supplyHistoryData} margin={{ top: 5, right: 20, bottom: 5, left: -10 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border) / 0.5)" />
+                    <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize="0.75rem" />
+                    <YAxis stroke="hsl(var(--muted-foreground))" fontSize="0.75rem" tickFormatter={(value) => `${value/1000000}M`} />
+                    <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+                    <Legend wrapperStyle={{fontSize: "0.875rem"}} />
+                    <Line type="monotone" dataKey="supply" stroke="var(--color-desktop)" strokeWidth={2} dot={{ r: 4, fill: 'var(--color-desktop)' }} activeDot={{ r: 6 }} name="Total Supply" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
           </Card>
           
@@ -186,24 +225,19 @@ export default function LiveDashboardSection() {
               <CardDescription>Monthly USDA minting and burning volumes.</CardDescription>
             </CardHeader>
             <CardContent className="h-[300px] sm:h-[350px] w-full">
-               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={supplyHistoryData} margin={{ top: 5, right: 20, bottom: 5, left: -10 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border) / 0.5)" />
-                  <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize="0.75rem" />
-                  <YAxis stroke="hsl(var(--muted-foreground))" fontSize="0.75rem" />
-                  <Tooltip 
-                    contentStyle={{ 
-                      background: 'hsl(var(--card) / 0.8)', 
-                      borderColor: 'hsl(var(--border))',
-                      borderRadius: 'var(--radius)',
-                    }}
-                    itemStyle={{ color: 'hsl(var(--card-foreground))' }}
-                  />
-                  <Legend wrapperStyle={{fontSize: "0.875rem"}} />
-                  <Bar dataKey="minted" fill="hsl(var(--primary))" name="Minted" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="burned" fill="hsl(var(--destructive))" name="Burned" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
+              <ChartContainer config={mintBurnChartConfig} className="w-full h-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RechartsBarChart data={supplyHistoryData} margin={{ top: 5, right: 20, bottom: 5, left: -10 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border) / 0.5)" />
+                    <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize="0.75rem" />
+                    <YAxis stroke="hsl(var(--muted-foreground))" fontSize="0.75rem" tickFormatter={(value) => `${value/1000000}M`} />
+                    <ChartTooltip content={<ChartTooltipContent indicator="dot" />} />
+                    <Legend wrapperStyle={{fontSize: "0.875rem"}} />
+                    <Bar dataKey="minted" fill="var(--color-minted)" name="Minted" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="burned" fill="var(--color-burned)" name="Burned" radius={[4, 4, 0, 0]} />
+                  </RechartsBarChart>
+                </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
           </Card>
         </motion.div>
