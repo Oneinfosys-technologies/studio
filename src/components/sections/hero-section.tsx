@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
+
 export default function HeroSection() {
   const [isClient, setIsClient] = useState(false);
 
@@ -33,14 +34,13 @@ export default function HeroSection() {
       className="relative min-h-screen flex flex-col items-center justify-center py-20 overflow-hidden text-center"
       variants={sectionVariants}
       initial="hidden"
-      whileInView="visible"
+      animate={isClient ? "visible" : "hidden"} // Control animation based on client-side mount
       viewport={{ once: true, amount: 0.3 }}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 z-10">
         <motion.div variants={itemVariants} className="mb-12 md:mb-16">
-          {/* Placeholder for a visual element if AnimatedCoin is removed */}
-          <div className="relative w-36 h-36 sm:w-48 sm:h-48 md:w-64 md:h-64 flex items-center justify-center mx-auto">
-            <ShieldCheck className="w-24 h-24 sm:w-32 sm:h-32 md:h-40 md:w-40 text-primary opacity-80" />
+          <div className="relative w-36 h-36 sm:w-48 sm:h-48 md:w-64 md:h-64 flex items-center justify-center mx-auto animate-float">
+            <ShieldCheck className="w-full h-full text-foreground opacity-80" />
           </div>
         </motion.div>
 

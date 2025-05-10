@@ -108,7 +108,8 @@ body {
 
 /* Custom gradient text (can be adapted) */
 .text-gradient-futuristic {
-  @apply bg-gradient-to-r from-[hsl(var(--primary))] via-[hsl(var(--secondary))] to-[hsl(var(--accent))] bg-clip-text text-transparent;
+  /* @apply bg-gradient-to-r from-[hsl(var(--primary))] via-[hsl(var(--secondary))] to-[hsl(var(--accent))] bg-clip-text text-transparent; */
+  @apply text-foreground;
 }
 
 
@@ -222,4 +223,13 @@ section {
     padding-top: 7rem;
     padding-bottom: 7rem;
   }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }

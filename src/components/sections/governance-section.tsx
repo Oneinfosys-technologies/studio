@@ -53,7 +53,7 @@ export default function GovernanceSection() {
           <motion.div className="lg:col-span-1 space-y-6" variants={itemVariants}>
             <Card>
               <CardHeader className="flex flex-row items-center space-x-3">
-                <Users className="w-8 h-8 text-primary" />
+                <Users className="w-8 h-8 text-foreground" />
                 <CardTitle>Decentralized Autonomous Organization</CardTitle>
               </CardHeader>
               <CardContent>
@@ -64,14 +64,14 @@ export default function GovernanceSection() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center space-x-3">
-                <Vote className="w-8 h-8 text-secondary" />
+                <Vote className="w-8 h-8 text-foreground" />
                 <CardTitle>Voting Power & Proposals</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
                   SKY tokens grant voting rights. Influence protocol parameters, treasury allocations, and new feature integrations.
                 </p>
-                <Button variant="neon" className="mt-4 w-full border-secondary text-secondary shadow-[0_0_10px_theme(colors.secondary.DEFAULT),0_0_20px_theme(colors.secondary.DEFAULT)_inset] hover:shadow-[0_0_15px_theme(colors.secondary.DEFAULT),0_0_30px_theme(colors.secondary.DEFAULT)_inset] hover:text-secondary">
+                <Button variant="neon" className="mt-4 w-full border-secondary text-foreground shadow-[0_0_10px_theme(colors.secondary.DEFAULT),0_0_20px_theme(colors.secondary.DEFAULT)_inset] hover:shadow-[0_0_15px_theme(colors.secondary.DEFAULT),0_0_30px_theme(colors.secondary.DEFAULT)_inset] hover:text-foreground">
                   View Governance Forum
                 </Button>
               </CardContent>
@@ -80,7 +80,7 @@ export default function GovernanceSection() {
 
           <motion.div className="lg:col-span-2 space-y-8" variants={itemVariants}>
             <div className="flex items-center space-x-3 mb-6">
-               <BarChartHorizontalBig className="w-8 h-8 text-primary" />
+               <BarChartHorizontalBig className="w-8 h-8 text-foreground" />
                <h3 className="text-2xl font-semibold text-foreground">Live Governance Proposals</h3>
             </div>
             
@@ -94,7 +94,7 @@ export default function GovernanceSection() {
                   <Card key={proposal.id} className="hover:shadow-lg hover:shadow-primary/10 transition-shadow duration-300">
                     <CardHeader>
                       <div className="flex justify-between items-start">
-                        <CardTitle className="text-lg text-primary pr-4">{proposal.title}</CardTitle>
+                        <CardTitle className="text-lg text-foreground pr-4">{proposal.title}</CardTitle>
                         <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
                           proposal.status === 'Voting Active' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/50' :
                           proposal.status === 'Passed' ? 'bg-green-500/20 text-green-400 border border-green-500/50' :
@@ -118,7 +118,7 @@ export default function GovernanceSection() {
                         </div>
                       )}
                       <div className="flex space-x-3">
-                        <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary/10">
+                        <Button variant="outline" size="sm" className="border-foreground text-foreground hover:bg-accent hover:text-accent-foreground">
                           <FileText className="mr-2 h-4 w-4" /> Read Proposal
                         </Button>
                         {proposal.status === 'Voting Active' && (
@@ -139,7 +139,7 @@ export default function GovernanceSection() {
               })}
             </div>
             <div className="text-center mt-8">
-               <Button variant="link" className="text-lg text-primary hover:text-primary">
+               <Button variant="link" className="text-lg text-foreground hover:text-foreground hover:underline">
                  Explore All Proposals <Archive className="ml-2 h-5 w-5" />
                </Button>
             </div>

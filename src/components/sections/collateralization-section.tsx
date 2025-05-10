@@ -64,7 +64,7 @@ export default function CollateralizationSection() {
             <Card className="h-full">
               <CardHeader>
                 <div className="flex items-center space-x-3 mb-2">
-                  <PieChartIcon className="h-8 w-8 text-primary" />
+                  <PieChartIcon className="h-8 w-8 text-foreground" />
                   <CardTitle>Reserve Composition</CardTitle>
                 </div>
                 <CardDescription>
@@ -111,7 +111,7 @@ export default function CollateralizationSection() {
           <motion.div className="space-y-6" variants={itemVariants}>
             <Card>
               <CardHeader className="flex flex-row items-start space-x-4">
-                <Banknote className="h-10 w-10 text-primary mt-1 flex-shrink-0" />
+                <Banknote className="h-10 w-10 text-foreground mt-1 flex-shrink-0" />
                 <div>
                   <CardTitle>1:1 Backing Commitment</CardTitle>
                   <CardDescription className="mt-1">
@@ -122,7 +122,7 @@ export default function CollateralizationSection() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-start space-x-4">
-                <ShieldAlert className="h-10 w-10 text-secondary mt-1 flex-shrink-0" />
+                <ShieldAlert className="h-10 w-10 text-foreground mt-1 flex-shrink-0" />
                 <div>
                   <CardTitle>Regular Audits & Transparency</CardTitle>
                   <CardDescription className="mt-1">
@@ -133,7 +133,7 @@ export default function CollateralizationSection() {
             </Card>
              <div className="text-center lg:text-left pt-4">
                 <p className="text-lg font-semibold text-foreground">
-                  Total Collateralization: <span className="text-primary">{totalCollateral}%</span> (Target: ≥100%)
+                  Total Collateralization: <span className="text-foreground">{totalCollateral}%</span> (Target: ≥100%)
                 </p>
               </div>
           </motion.div>
