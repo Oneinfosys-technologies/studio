@@ -1,13 +1,16 @@
+'use client';
+
 import HeroSection from '@/components/sections/hero-section';
 import AboutUSDASection from '@/components/sections/about-usda-section';
 import CollateralizationSection from '@/components/sections/collateralization-section';
-import LiveDashboardSection from '@/components/sections/dashboard-preview-section'; // Renamed component, original file name was dashboard-preview-section
+import LiveDashboardSection from '@/components/sections/dashboard-preview-section';
 import DeFiIntegrationsSection from '@/components/sections/defi-integrations-section';
 import GovernanceSection from '@/components/sections/governance-section';
-import { motion } from 'framer-motion'; // Import motion if using page-level transitions
+import { motion } from 'framer-motion';
+import type { ReactNode } from 'react';
 
 // Helper component for section transitions if needed
-const MotionSection = ({ children, id }: { children: React.ReactNode, id: string }) => (
+const MotionSection = ({ children, id }: { children: ReactNode, id: string }) => (
   <motion.div
     id={id} // Keep ID for navigation
     initial={{ opacity: 0, y: 20 }}
