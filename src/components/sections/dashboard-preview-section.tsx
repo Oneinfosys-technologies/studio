@@ -7,7 +7,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { useState, useEffect } from 'react';
 import { motion, animate } from 'framer-motion'; // Import animate
 import type { ChartConfig } from "@/components/ui/chart"; // Import ChartConfig
-import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"; // Import ChartContainer and ChartTooltipContent
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"; // Import ChartContainer, ChartTooltip and ChartTooltipContent
 
 
 interface StatCardProps {
@@ -245,3 +245,4 @@ export default function LiveDashboardSection() {
     </motion.section>
   );
 }
+
