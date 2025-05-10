@@ -5,6 +5,8 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
+import AnimatedBackground from '@/components/animated-background';
+import FloatingActionButton from '@/components/floating-action-button'; // Placeholder for FAB
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -17,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'USDA.money - The Future of Stablecoins',
-  description: 'Decentralized. Collateralized. Stable. The next generation USD-backed stablecoin.',
+  title: 'USDA.money - Backed. Stable. Trusted.',
+  description: 'The futuristic, high-performance stablecoin. Decentralized, collateralized, and built for the future of finance.',
 };
 
 export default function RootLayout({
@@ -28,17 +30,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
-        <div className="site-background-effect" aria-hidden="true"></div>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen bg-background`}>
+        <AnimatedBackground />
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem
+          defaultTheme="dark" // Ensure dark mode is default
+          enableSystem={false} // Explicitly disable system if dark is always default
           disableTransitionOnChange
         >
           <Header />
-          <main className="flex-grow">{children}</main>
+          <main className="flex-grow relative z-10">{children}</main>
           <Footer />
+          <FloatingActionButton />
           <Toaster />
         </ThemeProvider>
       </body>

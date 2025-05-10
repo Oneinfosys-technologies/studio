@@ -1,57 +1,108 @@
-
-"use client"; // Add this directive
+// src/components/sections/hero-section.tsx
+"use client";
 
 import { Button } from '@/components/ui/button';
-import { ChevronRight, DollarSign } from 'lucide-react';
+import { ChevronRight, ShieldCheck, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+
+// Simple animated coin representation
+const AnimatedCoin = () => (
+  <motion.div
+    className="relative w-36 h-36 sm:w-48 sm:h-48 md:w-64 md:h-64"
+    animate={{ rotateY: [0, 360], scale: [1, 1.05, 1] }}
+    transition={{
+      rotateY: { duration: 10, repeat: Infinity, ease: "linear" },
+      scale: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+    }}
+  >
+    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/30 via-secondary/30 to-accent/30 opacity-50 blur-lg"></div>
+    <div className="absolute inset-2 rounded-full border-2 border-primary/50 flex items-center justify-center glassmorphism shadow-xl">
+      <ShieldCheck className="w-16 h-16 sm:w-20 sm:w-20 md:h-28 md:w-28 text-primary text-glow-primary opacity-80" />
+    </div>
+    {/* Orbiting elements */}
+    {[...Array(3)].map((_, i) => (
+      <motion.div
+        key={i}
+        className="absolute rounded-full w-4 h-4 bg-accent/70 shadow-md"
+        style={{ 
+          top: '50%', 
+          left: '50%', 
+          x: '-50%', 
+          y: '-50%',
+          originX: `${Math.cos((i * 2 * Math.PI) / 3) * (60 + i * 15)}%`, // Adjust radius
+          originY: `${Math.sin((i * 2 * Math.PI) / 3) * (60 + i * 15)}%`,
+        }}
+        animate={{
+          x: [`${Math.cos((i * 2 * Math.PI) / 3) * (i % 2 === 0 ? 70 : 90)}%`, `${Math.cos((i * 2 * Math.PI) / 3 + 2 * Math.PI) * (i % 2 === 0 ? 70 : 90)}%`],
+          y: [`${Math.sin((i * 2 * Math.PI) / 3) * (i % 2 === 0 ? 70 : 90)}%`, `${Math.sin((i * 2 * Math.PI) / 3 + 2 * Math.PI) * (i % 2 === 0 ? 70 : 90)}%`],
+        }}
+        transition={{ duration: 5 + i*2, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
+      />
+    ))}
+  </motion.div>
+);
+
 
 export default function HeroSection() {
-  return (
-    <section className="relative min-h-screen flex items-center justify-center py-20 overflow-hidden">
-      {/* Removed local background overlay divs to let global effect show */}
-      {/* The global .site-background-effect will provide the background */}
+  const sectionVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { staggerChildren: 0.3, delayChildren: 0.2 }
+    },
+  };
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight">
-          <span className="block text-gradient-primary">USDA</span>
-          <span className="block text-foreground mt-2 md:mt-4">The Next Generation USD-Backed Stablecoin</span>
-        </h1>
-        <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-muted-foreground">
-          Decentralized. Collateralized. Stable.
-        </p>
-        <div className="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-          <Button size="lg" className="w-full sm:w-auto text-lg px-8 py-4 bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform duration-300">
-            Get USDA Now
-            <ChevronRight className="ml-2 h-5 w-5" />
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
+  return (
+    <motion.section 
+      id="hero" 
+      className="relative min-h-screen flex flex-col items-center justify-center py-20 overflow-hidden text-center"
+      variants={sectionVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <motion.div variants={itemVariants} className="mb-12 md:mb-16">
+          <AnimatedCoin />
+        </motion.div>
+
+        <motion.h1 
+          variants={itemVariants}
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight"
+        >
+          <span className="block text-gradient-futuristic">USDA.money</span>
+          <span className="block text-foreground mt-2 md:mt-4 text-2xl sm:text-3xl md:text-4xl">Backed. Stable. Trusted.</span>
+        </motion.h1>
+        <motion.p 
+          variants={itemVariants}
+          className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-muted-foreground"
+        >
+          The futuristic, high-performance stablecoin. Decentralized, collateralized, and built for the future of finance.
+        </motion.p>
+        <motion.div 
+          variants={itemVariants}
+          className="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6"
+        >
+          <Button asChild size="lg" variant="neon" className="w-full sm:w-auto text-lg px-10 py-6">
+            <Link href="#about">
+              Discover USDA
+              <Zap className="ml-2 h-5 w-5" />
+            </Link>
           </Button>
-          <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg px-8 py-4 border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary shadow-lg transform hover:scale-105 transition-transform duration-300">
-            Explore Protocol
+          <Button asChild size="lg" variant="outline" className="w-full sm:w-auto text-lg px-10 py-6 border-2 border-secondary text-secondary hover:bg-secondary/10 hover:text-secondary hover:shadow-secondary/30">
+            <Link href="#dashboard">
+              Live Dashboard
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Link>
           </Button>
-        </div>
-        
-        {/* Placeholder for where the 3D coin model was, now an animated effect */}
-        <div className="mt-16 lg:mt-24 h-48 sm:h-64 md:h-80 flex items-center justify-center">
-          <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48">
-            <div className="absolute inset-0 bg-primary/20 rounded-full animate-pulse opacity-50"></div>
-            <div className="absolute inset-2 bg-primary/30 rounded-full animate-pulse animation-delay-200 opacity-60"></div>
-            <div className="absolute inset-4 bg-primary/40 rounded-full animate-pulse animation-delay-400 opacity-70"></div>
-            <div className="w-full h-full rounded-full border-4 border-primary/50 flex items-center justify-center animate-spin-slow">
-              <DollarSign className="text-primary opacity-80 h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24" />
-            </div>
-          </div>
-        </div>
-        <style jsx global>{`
-          .animation-delay-200 { animation-delay: 0.2s; }
-          .animation-delay-400 { animation-delay: 0.4s; }
-          @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-          }
-          .animate-spin-slow {
-            animation: spin-slow 20s linear infinite;
-          }
-        `}</style>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
-

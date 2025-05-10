@@ -8,17 +8,21 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Removed images configuration as remote images are no longer used.
-  // images: {
-  //   remotePatterns: [
-  //     {
-  //       protocol: 'https',
-  //       hostname: 'picsum.photos',
-  //       port: '',
-  //       pathname: '/**',
-  //     },
-  //   ],
-  // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos', // Placeholder images
+        port: '',
+        pathname: '/**',
+      },
+      // Add other domains if you use actual logos from CDNs
+    ],
+     // Required for SVG support with next/image
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
 };
 
 export default nextConfig;
