@@ -2,7 +2,7 @@
 "use client";
 
 import { Button } from '@/components/ui/button';
-import { ChevronRight, ShieldCheck, Zap } from 'lucide-react';
+import { ChevronRight, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -39,8 +39,16 @@ export default function HeroSection() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 z-10">
         <motion.div variants={itemVariants} className="mb-12 md:mb-16">
+          {/* The ShieldCheck icon previously here has been removed */}
           <div className="relative w-36 h-36 sm:w-48 sm:h-48 md:w-64 md:h-64 flex items-center justify-center mx-auto animate-float">
-            <ShieldCheck className="w-full h-full text-foreground opacity-80" />
+             {/* Placeholder for a 3D coin or logo if ShieldCheck is not desired */}
+             {/* For example, a simple div representing a coin */}
+             <div 
+                className="w-full h-full rounded-full bg-gradient-to-br from-primary to-secondary opacity-80 shadow-2xl flex items-center justify-center"
+                data-ai-hint="coin 3d"
+              >
+                <span className="text-4xl font-bold text-primary-foreground">UD</span>
+             </div>
           </div>
         </motion.div>
 
@@ -48,7 +56,7 @@ export default function HeroSection() {
           variants={itemVariants}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight"
         >
-          <span className="block text-gradient-futuristic">USDA.money</span>
+          <span className="block text-foreground">USDA.money</span>
           <span className="block text-foreground mt-2 md:mt-4 text-2xl sm:text-3xl md:text-4xl">Backed. Stable. Trusted.</span>
         </motion.h1>
         <motion.p
